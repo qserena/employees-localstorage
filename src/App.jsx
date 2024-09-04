@@ -1,35 +1,302 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
+import EmployeeItem from './EmployeeItem'
 
 function App() {
-  const [count, setCount] = useState(0)
+    const BASE_URL = 'http://localhost:4000/api/Employee/'
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const emptyForm = {
+        id: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        comments: '',
+        isFriendly: false,
+        birthYear: 0,
+        weight: 0,
+        employmentStatus: 0,
+        favoriteColor: 0,
+    }
+
+    const [formData, setFormData] = useState(emptyForm)
+    const [employees, setEmployees] = useState([])
+
+    useEffect(() => {
+        getEmployees()
+    }, [])
+
+    async function getEmployees() {
+        const res = [emptyForm]
+        setEmployees(
+            res.map((elem) => ({
+                ...elem,
+                key: elem.id,
+            }))
+        )
+    }
+
+    async function addClick() {
+        if (formData.firstName === '') {
+            alert('First Name is required')
+            return
+        }
+
+        const data = {
+            ...formData,
+            id: null,
+        }
+
+        //await axios.post(BASE_URL, data)
+        setFormData(emptyForm)
+
+        getEmployees()
+    }
+
+    async function updateClick() {
+        const data = {
+            ...formData,
+        }
+
+        const url = BASE_URL + `${data.id}`
+        //await axios.put(url, data)
+        setFormData(emptyForm)
+
+        getEmployees()
+    }
+
+    async function deleteClick() {
+        const url = BASE_URL + `${formData.id}`
+        //await axios.delete(url)
+        setFormData(emptyForm)
+
+        getEmployees()
+    }
+
+    function handleChange(e) {
+        const { type, name, value, checked } = e.target
+        const convertedValue = type === 'radio' ? parseInt(value) : value
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: type === 'checkbox' ? checked : convertedValue,
+        }))
+    }
+
+    const employeeList = employees.map((item) => (
+        <EmployeeItem
+            key={item.id}
+            employee={item}
+            setForm={() => setFormData(item)}
+            isSelected={item.id === formData.id}
+        ></EmployeeItem>
+    ))
+
+    return (
+        <div className="container">
+            <h1>Admin Form</h1>
+            <div className="main">
+                <div className="left">
+                    <h2>Employee</h2>
+                    <div className="form">
+                        <div id="form-left">
+                            <label htmlFor="firstName">First Name *</label>
+                            <input
+                                type="text"
+                                onChange={handleChange}
+                                id="firstName"
+                                name="firstName"
+                                value={formData.firstName}
+                            />
+                            <label htmlFor="lastName">Last Name</label>
+                            <input
+                                type="text"
+                                onChange={handleChange}
+                                id="lastName"
+                                name="lastName"
+                                value={formData.lastName}
+                            />
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                onChange={handleChange}
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                            />
+                            <label htmlFor="comments" className="htmlFor">
+                                Comments
+                            </label>
+                            <textarea
+                                onChange={handleChange}
+                                id="comments"
+                                name="comments"
+                                value={formData.comments}
+                            />
+                            <label className="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    onChange={handleChange}
+                                    id="isFriendly"
+                                    name="isFriendly"
+                                    checked={formData.isFriendly}
+                                    className="checkbox"
+                                />
+                                Are you friendly?
+                            </label>
+                            <label htmlFor="birthYear">Birth Year</label>
+                            <input
+                                type="number"
+                                onChange={handleChange}
+                                id="birthYear"
+                                name="birthYear"
+                                value={formData.birthYear}
+                            />
+                            <label htmlFor="weight">Weight</label>
+                            <input
+                                type="number"
+                                onChange={handleChange}
+                                id="weight"
+                                name="weight"
+                                value={formData.weight}
+                            />
+                        </div>
+                        <div id="form-right">
+                            <fieldset>
+                                <legend>Current employment status</legend>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        onChange={handleChange}
+                                        id="fullTime"
+                                        name="employmentStatus"
+                                        value={1}
+                                        checked={
+                                            formData.employmentStatus === 1
+                                        }
+                                    />
+                                    Full Time
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        onChange={handleChange}
+                                        id="partTime"
+                                        name="employmentStatus"
+                                        value={2}
+                                        checked={
+                                            formData.employmentStatus === 2
+                                        }
+                                    />
+                                    Part Time
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        onChange={handleChange}
+                                        id="contractor"
+                                        name="employmentStatus"
+                                        value={3}
+                                        checked={
+                                            formData.employmentStatus === 3
+                                        }
+                                    />
+                                    Contractor
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        onChange={handleChange}
+                                        id="temp"
+                                        name="employmentStatus"
+                                        value={4}
+                                        checked={
+                                            formData.employmentStatus === 4
+                                        }
+                                    />
+                                    Temp
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        onChange={handleChange}
+                                        id="intern"
+                                        name="employmentStatus"
+                                        value={5}
+                                        checked={
+                                            formData.employmentStatus === 5
+                                        }
+                                    />
+                                    Intern
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        onChange={handleChange}
+                                        id="retired"
+                                        name="employmentStatus"
+                                        value={6}
+                                        checked={
+                                            formData.employmentStatus === 6
+                                        }
+                                    />
+                                    Retired
+                                </label>
+                            </fieldset>
+                            <br />
+
+                            <label htmlFor="favoriteColor">
+                                Favorite Color
+                            </label>
+                            <select
+                                id="favoriteColor"
+                                name="favoriteColor"
+                                value={formData.favoriteColor}
+                                onChange={handleChange}
+                            >
+                                <option value={0}>-- Choose --</option>
+                                <option value={1}>Red</option>
+                                <option value={2}>Orange</option>
+                                <option value={3}>Yellow</option>
+                                <option value={4}>Green</option>
+                                <option value={5}>Blue</option>
+                                <option value={6}>Indigo</option>
+                                <option value={7}>Violet</option>
+                            </select>
+                            <br />
+                        </div>
+                    </div>
+
+                    <div className="buttons">
+                        <button
+                            id="addButton"
+                            disabled={formData.firstName === ''}
+                            onClick={() => addClick()}
+                        >
+                            Add
+                        </button>
+                        <button
+                            id="updateButton"
+                            disabled={formData.id === ''}
+                            onClick={() => updateClick()}
+                        >
+                            Update
+                        </button>
+                        <button
+                            id="deleteButton"
+                            disabled={formData.id === ''}
+                            onClick={() => deleteClick()}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+
+                <div className="right">
+                    <h2>Employees</h2>
+                    <ul className="list">{employeeList}</ul>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default App
