@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import { nanoid } from 'nanoid'
 import EmployeeItem from './EmployeeItem'
+import defaultEmployees from './data.js'
 
 function App() {
     const BASE_URL = 'http://localhost:4000/api/Employee/'
@@ -26,7 +28,8 @@ function App() {
     }, [])
 
     async function getEmployees() {
-        const res = [emptyForm]
+        let res = defaultEmployees
+        console.log(res)
         setEmployees(
             res.map((elem) => ({
                 ...elem,
