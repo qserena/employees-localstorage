@@ -5,8 +5,6 @@ import EmployeeItem from './EmployeeItem'
 import defaultEmployees from './data.js'
 
 function App() {
-    const BASE_URL = 'http://localhost:4000/api/Employee/'
-
     const emptyForm = {
         id: '',
         firstName: '',
@@ -21,22 +19,13 @@ function App() {
     }
 
     const [formData, setFormData] = useState(emptyForm)
-    const [employees, setEmployees] = useState([])
+    const [employees, setEmployees] = useState(
+        () => JSON.parse(localStorage.getItem('employees')) || defaultEmployees
+    )
 
     useEffect(() => {
-        getEmployees()
-    }, [])
-
-    async function getEmployees() {
-        let res = defaultEmployees
-        console.log(res)
-        setEmployees(
-            res.map((elem) => ({
-                ...elem,
-                key: elem.id,
-            }))
-        )
-    }
+        localStorage.setItem('employees', JSON.stringify(employees))
+    }, [employees])
 
     async function addClick() {
         if (formData.firstName === '') {
@@ -44,15 +33,14 @@ function App() {
             return
         }
 
-        const data = {
+        const newEmployee = {
             ...formData,
-            id: null,
+            id: nanoid(),
         }
 
-        //await axios.post(BASE_URL, data)
-        setFormData(emptyForm)
+        setEmployees((prevEmployees) => [...prevEmployees, newEmployee])
 
-        getEmployees()
+        setFormData(emptyForm)
     }
 
     async function updateClick() {
@@ -60,19 +48,14 @@ function App() {
             ...formData,
         }
 
-        const url = BASE_URL + `${data.id}`
-        //await axios.put(url, data)
         setFormData(emptyForm)
-
-        getEmployees()
     }
 
     async function deleteClick() {
-        const url = BASE_URL + `${formData.id}`
-        //await axios.delete(url)
+        setEmployees((prevEmployees) =>
+            prevEmployees.filter((employee) => employee.id !== formData.id)
+        )
         setFormData(emptyForm)
-
-        getEmployees()
     }
 
     function handleChange(e) {
