@@ -48,6 +48,15 @@ function App() {
             ...formData,
         }
 
+        setEmployees((prevEmployees) => {
+            return prevEmployees.map((employee) => {
+                if (employee.id === data.id) {
+                    return data
+                }
+                return employee
+            })
+        })
+
         setFormData(emptyForm)
     }
 
