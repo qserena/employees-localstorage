@@ -6,8 +6,8 @@
 This is a CRUD (Create, Read, Update, Delete) application with a React client, using localstorage for storing data. 
 
 
-<br/> 
-NOTE! The same client, but with an ASP.NET API and SQL Server backend is found <a href="https://github.com/qserena/react-aspnet/">Here!</a> 
+
+The same client, but with an ASP.NET API and SQL Server backend is found <a href="https://github.com/qserena/react-aspnet/">Here!</a> 
 <br/>
 <br/>
 
