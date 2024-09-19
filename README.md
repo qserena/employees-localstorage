@@ -11,7 +11,7 @@ The same form, but with an ASP.NET API and SQL Server backend is found <a href="
 <br/> 
 <kbd><img src="./form.png" alt="Simple user interface." width="700px"/></kbd>
 
-The form shown above is used to execute the CRUD operations. I included quite a lot of input fields in order to handle many data types. 
+I included quite a lot of input fields in order to handle many data types. 
 
 The React app includes the following techniques:
 - [Controlled inputs](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable) for good practice on how to handle form data.
