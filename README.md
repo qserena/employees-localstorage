@@ -30,8 +30,8 @@ When using "Update" and "Delete" you have to first select the item in the list a
 <br/>
 
 ## Live link
-Tenzies is deployed here:
-[https://toms--employees.netlify.app](https://toms-employees.netlify.app)
+The React Form is deployed here:
+[https://toms-employees.netlify.app](https://toms-employees.netlify.app)
 
 Please feel free to visit and try out the form!
 
