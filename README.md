@@ -1,7 +1,5 @@
 # React Form interacting with localstorage
 
-<br/>
-
 ## Description
 This is a CRUD (Create, Read, Update, Delete) application with a React client, using localstorage for storing data. 
 
