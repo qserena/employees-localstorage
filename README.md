@@ -31,5 +31,3 @@ The React Form is deployed here:
 
 Please feel free to visit and try out the form!
 
-## Inspirations and Credits
-- [The Frontend Developer Career Path (Scrimba)](https://v2.scrimba.com/the-frontend-developer-career-path-c0j)
