@@ -19,15 +19,11 @@ The React app includes the following techniques:
 
 When using "Update" and "Delete" you have to first select the item in the list at the right.
 
-<br/>
-
 ## Technologies
 - HTML
 - CSS
 - JavaScript
 - React
-
-<br/>
 
 ## Live link
 The React Form is deployed here:
