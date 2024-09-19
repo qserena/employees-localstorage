@@ -29,6 +29,11 @@ When using "Update" and "Delete" you have to first select the item in the list a
 
 <br/>
 
+## Live link
+Tenzies is deployed here:
+[https://toms--employees.netlify.app](https://toms-employees.netlify.app)
+
+Please feel free to visit and try out the form!
 
 ## Inspirations and Credits
 - [The Frontend Developer Career Path (Scrimba)](https://v2.scrimba.com/the-frontend-developer-career-path-c0j)
