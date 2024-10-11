@@ -171,8 +171,9 @@ button:hover {
     }
 
     button {
-        padding: 0.5em 1.1em;
+        padding: 0.5em 0.8em;
         font-size: 0.9em;
+        margin-right: 1em;
     }
 
     .list {
